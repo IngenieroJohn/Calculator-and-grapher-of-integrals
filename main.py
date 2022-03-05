@@ -3,6 +3,26 @@ from sympy import *
 from sympy.parsing.sympy_parser import parse_expr # Leer función introducida
 from tkinter import *
 
+def grafint(): #esto es para graficar pero hay un error en las librerias de importación
+    from matplotlib.pyplot import * #esta libreria si las pones afuera tambn dan error
+    from numpy import * #esta tambn
+    x=arange(0,10,0.001)
+
+    fun_escrita = funcion.get()
+    f = parse_expr(fun_escrita)
+    fun_escrita2 = funcion2.get()
+    g = parse_expr(fun_escrita2)
+
+
+    plot(x,g,x,f)
+    fill_between(x,f,g) 
+    x= symbols('x')
+    h=g-f
+    res=integrate(h,(x,1,6))
+    print (f'La respuesta es {res}')
+    show()
+    
+    
 def derivada():
     try:
         x = symbols('x') #Declarar variable independiente
