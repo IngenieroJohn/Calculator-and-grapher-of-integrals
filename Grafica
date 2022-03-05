@@ -1,0 +1,22 @@
+from matplotlib.pyplot import *
+from numpy import *
+
+
+def g1(f1, g1):
+    x=arange(0,10,0.001)
+    f = parse_expr(f1)
+    g = parse_expr(g1)
+    plot(x,g,x,f)
+
+from sympy import *
+
+def g2(f1, g1):
+    f = parse_expr(f1)
+    g = parse_expr(g1)
+    fill_between(x,f,g) 
+    x= symbols('x')
+    
+    h=g-f
+    res=integrate(h,(x,1,6))
+    print (f'La respuesta es {res}')
+    show()
