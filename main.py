@@ -13,6 +13,19 @@ def derivada():
     except:
         etiqueta.configure(text="Introduce la función correctamente")
         
+
+def derivada2():
+    try:
+        x = symbols('x') #Declarar variable independiente
+        fun_escrita = funcion2.get()
+        f = parse_expr(fun_escrita)
+        derivada = diff(f,x) 
+        etiqueta2.configure(text=derivada)
+    except:
+        etiqueta2.configure(text="Introduce la función 2 correctamente")     
+        
+        
+        
         
 def integral():
     try:
@@ -23,6 +36,19 @@ def integral():
         etiqueta.configure(text=integral)
     except:
         etiqueta.configure(text="Introduce la función correctamente")
+        
+        
+def integral2():
+    try:
+        x = symbols('x') #Declarar variable independiente
+        fun_escrita2 = funcion2.get()
+        g = parse_expr(fun_escrita2)
+        integral = integrate(g,x)
+        etiqueta2.configure(text=integral)
+    except:
+        etiqueta2.configure(text="Introduce la función correctamente")
+        
+        
     
 ventana = Tk()
 ventana.geometry('400x280')
@@ -34,8 +60,17 @@ anuncio.pack()
 funcion = Entry(ventana, font=("Arial", 15))
 funcion.pack()
 
+anuncio2 = Label(ventana, text="Introduce G(x):", font=("Arial", 15), fg="blue")
+anuncio2.pack()
+
+funcion2 = Entry(ventana, font=("Arial", 15))
+funcion2.pack()
+
 etiqueta = Label(ventana, text="Resultado", font=("Arial", 15), fg="red")
 etiqueta.pack()
+
+etiqueta2 = Label(ventana, text="Resultado de g(x)", font=("Arial", 15), fg="red")
+etiqueta2.pack()
 
 boton1 = Button(ventana, text="Derivar Función", font=("Arial", 15), command=derivada)
 boton1.pack()
@@ -43,12 +78,16 @@ boton1.pack()
 boton2 = Button(ventana, text="Integrar Función", font=("Arial", 15), command=integral)
 boton2.pack()
 
+
+boton3 = Button(ventana, text="Mostrar integral", font=("Arial", 15), command= grafint)
+boton3.pack()
+
 def _quit(): #Función salir
     ventana.quit()     # detiene mainloop
     ventana.destroy()  # elimina la ventana de la memoria
                     
 
-button3 = Button(master=ventana, text="Salir", font=("Arial", 15), command=_quit)
-button3.pack()
+button4 = Button(master=ventana, text="Salir", font=("Arial", 15), command=_quit)
+button4.pack()
 
 ventana.mainloop()
