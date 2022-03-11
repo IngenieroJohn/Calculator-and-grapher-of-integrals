@@ -101,15 +101,22 @@ def represent():
     graph_data2=reemplazo(texto_orig2)
     ani.event_source.start()
     
-def guardar(e):
-    global expresiones
-    expresiones.append(e)
-    print(expresiones)
-
-
+def integraldefi():
+    
+    x = symbols('x') #Declarar variable independiente
+    fun_escrita1 = et.get()
+    fun_escrita2 = etn.get()
+    g2 = parse_expr(fun_escrita1)
+    g = parse_expr(fun_escrita2)
+    h = g2 -g
+    lim1= x0.get()
+    lim2= x1.get()
+    respuesta = integrate(h,(x,lim1,lim2))
+    etiquetafinal=tkinter.Label(master = root, text =f'La respuesta es {respuesta}' )
+    etiquetafinal.place(x=80, y=620)
 
 def integral():
-    
+
         x = symbols('x') #Declarar variable independiente
         fun_escrita2 = et.get()
         fun_escrita3 = etn.get()
@@ -118,9 +125,10 @@ def integral():
         integral = integrate(g,x)
         integral2 = integrate(g2,x)
         label2 = tkinter.Label(master = root, text = integral)
-        label2.pack()
+        label2.place(x=800, y=20)
         label3 = tkinter.Label(master = root, text = integral2)
-        label3.pack()
+        label3.place(x=800, y=45)
+
 def derivadas():
     
         x = symbols('x') #Declarar variable independiente
@@ -131,9 +139,9 @@ def derivadas():
         derivada = sp.diff(g,x)
         derivada2 = sp.diff(g2,x)
         label2 = tkinter.Label(master = root, text = derivada)
-        label2.place(x=1, y=20)
+        label2.place(x=50, y=20)
         label3 = tkinter.Label(master = root, text = derivada2)
-        label3.place(x=1, y=40)
+        label3.place(x=50, y=40)
 
 
 ani = animation.FuncAnimation(fig, animate, interval=1000)
@@ -155,14 +163,26 @@ et=tkinter.Entry(master=root,width=60)
 et.place(x=317,y=620)
 label = tkinter.Label(master = root, text = "RANGO DE 'X'")
 label.pack(side = tkinter.RIGHT)
-button = tkinter.Button(master=root, text="GUARDAR FUNCIÓN", bg="gray69", command=lambda:guardar(et.get()))
-button.place(x=280, y=20)
+button = tkinter.Button(master=root, text="Integrar definida", bg="gray69", command=integraldefi)
+button.place(x=360, y=20)
 
 buttonintegrales = tkinter.Button(master=root, text="Integrar funciones", bg="gray69", command=integral)
 buttonintegrales.place(x=460, y=20)
 
 buttonderivadas = tkinter.Button(master=root, text="Derivar funciones", bg="gray69", command=derivadas)
-buttonderivadas.place(x=650, y=20)
+buttonderivadas.place(x=570, y=20)
+
+
+x0=tkinter.Entry(master=root,width=5)
+x0.place(x=320,y=10)
+
+x1=tkinter.Entry(master=root,width=5)
+x1.place(x=320,y=45)
+
+elim1 = tkinter.Label(master = root, text = "a")
+elim1.place(x=300, y=10)
+elim2 = tkinter.Label(master = root, text = "b")
+elim2.place(x=300, y=45)
 
 
 var=tkinter.StringVar()
