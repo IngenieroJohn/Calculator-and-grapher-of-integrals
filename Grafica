@@ -1,6 +1,8 @@
+
+from sympy import*
 import sympy as sp
 from numpy import diff
-from sympy import integrate, symbols
+from sympy import integrate, re, symbols
 from sympy.parsing.sympy_parser import parse_expr # Leer función introducida
 import tkinter
 from matplotlib.figure import Figure
@@ -13,7 +15,7 @@ from tkinter import messagebox
 from math import *
 
 root = tkinter.Tk()
-root.wm_title("Graficador")
+root.wm_title("Graficador (Gracias al asesoramiento de Lily Rodríguez, Estudiante de Economía <3)")
 ta=root.geometry("1000x700")#1000x700
 #root.configure(background="SkyBlue4")
 
@@ -65,7 +67,7 @@ def animate(i):
         if ul_ran!="":
             x = np.arange(ul_ran[0],ul_ran[1], .01)#.01
         else:
-            x = np.arange(1, 10, .01)#.01
+            x = np.arange(1, 700, .01)#.01
     try:
         if graph_data2!="":
             solo2=eval(graph_data2)
@@ -115,6 +117,45 @@ def integraldefi():
     etiquetafinal=tkinter.Label(master = root, text =f'La respuesta es {respuesta}' )
     etiquetafinal.place(x=80, y=620)
 
+def des_x():
+    x = symbols('x') #Declarar variable independiente
+    oferta= et.get()
+    demanda= etn.get()
+    f1 = parse_expr(oferta)
+    f2 = parse_expr(demanda)
+    puntox= solve(f1 -1*(f2),x)
+    x = symbols('x') #Declarar variable independiente
+    f2.subs("x",puntox)
+
+    messagebox.showinfo(message=f'x: {puntox} y: {f2}' , title="Despeje de variables")
+    
+
+
+def ex_productor():
+    messagebox.showinfo(message="Reescriba la función del productor: (y- función1)", title="Calculo de Excedentes")
+    x = symbols('x') #Declarar variable independiente
+    oferta= et.get()
+    
+    f1 = parse_expr(oferta)
+    
+    lim1= x0.get()
+    lim2= x1.get()
+    respuesta= integrate(f1,(x,lim1,lim2))
+    productor=tkinter.Label(master = root, text =f'El excedente del productor es:  {respuesta}' )
+    productor.place(x=530, y=620)
+
+
+def ex_consumidor():
+    messagebox.showinfo(message="Reescriba la función del consumidor: (función2 - y)", title="Calculo de Excedentes")
+    x = symbols('x') #Declarar variable independiente
+    demanda= etn.get()
+    f1 = parse_expr(demanda)
+    lim1= x0.get()
+    lim2= x1.get()
+    respuesta= integrate(f1,(x,lim1,lim2))
+    consumidor=tkinter.Label(master = root, text =f'El excedente del consumidor es:  {respuesta}' )
+    consumidor.place(x=530, y=670)
+
 def integral():
 
         x = symbols('x') #Declarar variable independiente
@@ -149,7 +190,7 @@ plt.show()
 
 etn = tkinter.Entry(master=root,width=60)
 etn.config(bg="gray87", justify="left")
-button = tkinter.Button(master=root, text="SET", bg="gray69", command=represent)
+button = tkinter.Button(master=root, text="SET", bg="gray69", command= represent)
 button.pack(side=tkinter.BOTTOM)
 etn.pack(side=tkinter.BOTTOM)
 
@@ -163,8 +204,20 @@ et=tkinter.Entry(master=root,width=60)
 et.place(x=317,y=620)
 label = tkinter.Label(master = root, text = "RANGO DE 'X'")
 label.pack(side = tkinter.RIGHT)
+
+
+
+button= tkinter.Button(master=root, text = "Punto de equilibrio", bg="gray69", command= des_x)
+button.place(x=745,y=625)
+
 button = tkinter.Button(master=root, text="Integrar definida", bg="gray69", command=integraldefi)
 button.place(x=360, y=20)
+
+button = tkinter.Button(master=root, text="Excedente del productor", bg="gray69", command=ex_productor)
+button.place(x=380, y=45)
+
+button = tkinter.Button(master=root, text="Excedente del consumidor", bg="gray69", command=ex_consumidor)
+button.place(x=520, y=45)
 
 buttonintegrales = tkinter.Button(master=root, text="Integrar funciones", bg="gray69", command=integral)
 buttonintegrales.place(x=460, y=20)
